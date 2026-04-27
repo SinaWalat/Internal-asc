@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "feature-1",
+      "description": "Abstract shapes representing a feature.",
+      "imageUrl": "https://images.unsplash.com/photo-1710244182004-1c708b3f146d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHNoYXBlc3xlbnwwfHx8fDE3NjM1MDU3NDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract shapes"
+    },
+    {
+      "id": "feature-2",
+      "description": "Another abstract representation for a feature.",
+      "imageUrl": "https://images.unsplash.com/photo-1636955779321-819753cd1741?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBkZXNpZ258ZW58MHx8fHwxNzYzNDczODEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract design"
+    },
+    {
+      "id": "feature-3",
+      "description": "A third abstract image for a feature.",
+      "imageUrl": "https://images.unsplash.com/photo-1663895064411-fff0ab8a9797?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0ZWNoJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NjM1MDYwMzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tech background"
+    }
+  ]
+}

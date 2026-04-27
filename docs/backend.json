@@ -1,0 +1,272 @@
+
+{
+  "entities": {
+    "ContactMessage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Contact Message",
+      "type": "object",
+      "description": "Represents a contact message submitted by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the message."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the person submitting the message."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email of the person submitting the message.",
+          "format": "email"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the message."
+        },
+        "message": {
+          "type": "string",
+          "description": "The text content of the message."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "The date and time when the message was submitted.",
+          "format": "date-time"
+        },
+        "read": {
+          "type": "boolean",
+          "description": "Indicates if the message has been read by an admin."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "subject",
+        "message",
+        "created_at"
+      ]
+    },
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator with special privileges.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the admin (matches user UID)."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the admin user.",
+          "format": "email"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "The date and time when the admin was created.",
+          "format": "date-time"
+        },
+        "role": {
+          "type": "string",
+          "description": "The role of the administrator.",
+          "enum": [
+            "global_admin",
+            "editor",
+            "viewer"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "created_at"
+      ]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "type": "object",
+      "description": "Represents a student's profile information.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the user (matches auth UID)."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time the profile was created.",
+          "format": "date-time"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "URL for the user's profile picture.",
+          "format": "uri"
+        },
+        "university": {
+          "type": "string",
+          "description": "The university the student attends.",
+          "enum": [
+            "Tishk University",
+            "Kitab University"
+          ]
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "The user's date of birth in ISO format.",
+          "format": "date-time"
+        },
+        "bloodGroup": {
+          "type": "string",
+          "description": "The user's blood group.",
+          "enum": [
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+            "O+",
+            "O-"
+          ]
+        }
+      },
+      "required": [
+        "userId",
+        "firstName",
+        "lastName",
+        "email",
+        "createdAt"
+      ]
+    },
+    "OtpVerification": {
+      "title": "OTP Verification",
+      "type": "object",
+      "description": "Stores OTPs for email verification.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the OTP document."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "code": {
+          "type": "number",
+          "description": "The 6-digit one-time password."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "The date and time the OTP was created in ISO format.",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "description": "The date and time the OTP will expire in ISO format.",
+          "format": "date-time"
+        },
+        "verified": {
+          "type": "boolean",
+          "description": "Indicates if the OTP has been successfully used."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "code",
+        "created_at",
+        "expires_at",
+        "verified"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/contact_messages_rows/{messageId}",
+        "definition": {
+          "entityName": "ContactMessage",
+          "schema": {
+            "$ref": "#/backend/entities/ContactMessage"
+          },
+          "description": "Stores all contact messages in a single collection. The 'userId' field on each document enforces ownership.",
+          "params": [
+            {
+              "name": "messageId",
+              "description": "The unique identifier of the message."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/admins/{adminId}",
+        "definition": {
+          "entityName": "Admin",
+          "schema": {
+            "$ref": "#/backend/entities/Admin"
+          },
+          "description": "Stores all administrators in a single collection. The document ID {adminId} should match the Firebase Auth user UID.",
+          "params": [
+            {
+              "name": "adminId",
+              "description": "The unique identifier of the admin, matching their auth UID."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/profiles/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores student profile information. The document ID {userId} must match the Firebase Auth user UID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, matching their auth UID."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/otp_verifications/{otpId}",
+        "definition": {
+          "entityName": "OtpVerification",
+          "schema": {
+            "$ref": "#/backend/entities/OtpVerification"
+          },
+          "description": "Stores OTPs for email verification before an account is created. Documents should be marked as verified after use.",
+          "params": [
+            {
+              "name": "otpId",
+              "description": "The unique identifier for the OTP document."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "A single top-level 'contact_messages_rows' collection is used for simplicity. Security rules will enforce that users can only read/write their own messages by checking the 'userId' field on each document, which is a common and effective pattern. A single 'admins' collection is used to manage administrators. A 'profiles' collection is added to store student data, secured by user UID. An `otp_verifications` collection is added to temporarily store OTP codes for new user sign-ups."
+  }
+}
