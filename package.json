@@ -57,7 +57,7 @@
     "konva": "^9.3.22",
     "lucide-react": "^0.475.0",
     "nanoid": "^5.1.6",
-    "next": "^16.2.4",
+    "next": "^15.5.15",
     "next-themes": "^0.3.0",
     "patch-package": "^8.0.0",
     "react": "^18.3.1",
