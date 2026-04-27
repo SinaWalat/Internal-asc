@@ -10,17 +10,7 @@ import { firebaseConfig } from '@/firebase/config';
 // This function is ONLY for the client.
 function initializeFirebaseClient() {
   if (!getClientApps().length) {
-    let firebaseApp;
-    try {
-      // Attempt to initialize via Firebase App Hosting environment variables
-      firebaseApp = initializeClientApp();
-    } catch (e) {
-      if (process.env.NODE_ENV === "production") {
-        console.warn('Automatic initialization failed. Falling back to firebase config object.', e);
-      }
-      firebaseApp = initializeClientApp(firebaseConfig);
-    }
-
+    const firebaseApp = initializeClientApp(firebaseConfig);
     return getClientSdks(firebaseApp);
   }
 
